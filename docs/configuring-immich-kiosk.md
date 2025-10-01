@@ -20,11 +20,11 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 # Setting up Immich Kiosk
 
-This is an [Ansible](https://www.ansible.com/) role which installs [Immich Kiosk](https://immich_kiosk.io/) to run as a [Docker](https://www.docker.com/) container wrapped in a systemd service.
+This is an [Ansible](https://www.ansible.com/) role which installs [Immich Kiosk](https://immichkiosk.app/) to run as a [Docker](https://www.docker.com/) container wrapped in a systemd service.
 
 Immich Kiosk is a self-hosted pastebin powered by Git. All snippets are stored in a Git repository and can be read and/or modified using standard Git commands, or with the web interface.
 
-See the project's [documentation](https://immich_kiosk.io/docs/) to learn what Immich Kiosk does and why it might be useful to you.
+See the project's [documentation](https://docs.immichkiosk.app/) to learn what Immich Kiosk does and why it might be useful to you.
 
 ## Prerequisites
 
@@ -109,7 +109,7 @@ Take a look at:
 
 - [`defaults/main.yml`](../defaults/main.yml) for some variables that you can customize via your `vars.yml` file. You can override settings (even those that don't have dedicated playbook variables) using the `immich_kiosk_environment_variables_additional_variables` variable
 
-See [the official documentation](https://immich_kiosk.io/docs/configuration/cheat-sheet.html) for a complete list of Immich Kiosk's config options that you could put in `immich_kiosk_environment_variables_additional_variables`.
+See [the official documentation](https://immichkiosk.app/docs/configuration/cheat-sheet.html) for a complete list of Immich Kiosk's config options that you could put in `immich_kiosk_environment_variables_additional_variables`.
 
 ## Installing
 
