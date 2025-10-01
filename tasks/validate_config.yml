@@ -17,6 +17,8 @@
     - immich_kiosk_hostname
     - immich_kiosk_path_prefix
     - immich_kiosk_container_network
+    - immich_kiosk_environment_variables_kiosk_immich_api_key
+    - immich_kiosk_environment_variables_kiosk_immich_url
 
 - name: Run if Traefik is enabled
   when: immich_kiosk_container_labels_traefik_enabled | bool

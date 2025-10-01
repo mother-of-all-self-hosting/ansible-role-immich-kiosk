@@ -179,5 +179,23 @@ immich_kiosk_systemd_wanted_services_list_default: []
 immich_kiosk_systemd_wanted_services_list_auto: []
 immich_kiosk_systemd_wanted_services_list_custom: []
 
+# Specify the language code
+# See: https://raw.githubusercontent.com/damongolding/immich-kiosk/refs/heads/main/assets/locales.md
+immich_kiosk_environment_variables_lang: en_GB
+
+# Specify the timezone
+# See: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
+immich_kiosk_environment_variables_tz: Europe/London
+
+# Specify the API for your Immich server
+immich_kiosk_environment_variables_kiosk_immich_api_key: ""
+
+# Specify the URL of your Immich server
+# Include a port if one is needed
+immich_kiosk_environment_variables_kiosk_immich_url: ""
+
+# Specify the public URL of your Immich server used for generating links and QR codes in the additional information overlay
+immich_kiosk_environment_variables_kiosk_immich_external_url: ""
+
 # Additional environment variables.
 immich_kiosk_environment_variables_additional_variables: ""
