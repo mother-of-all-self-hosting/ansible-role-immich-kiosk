@@ -61,7 +61,7 @@ immich_kiosk_container_ssh_host_bind_port: ""
 immich_kiosk_container_network: "{{ immich_kiosk_identifier }}"
 
 # The port number in the container
-immich_kiosk_container_http_port: 6157
+immich_kiosk_container_http_port: 3000
 
 # The port number in the container
 immich_kiosk_container_ssh_port: 2222
