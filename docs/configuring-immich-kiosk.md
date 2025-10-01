@@ -26,6 +26,12 @@ Immich Kiosk is a software for displaying photos and videos on your [Immich](htt
 
 See the project's [documentation](https://docs.immichkiosk.app/) to learn what Immich Kiosk does and why it might be useful to you.
 
+## Prerequisites
+
+To run an Immich Kiosk it is necessary to prepare an Immich server.
+
+If you are looking for an Ansible role for Immich, you can check out [ansible-role-immich](https://github.com/mother-of-all-self-hosting/ansible-role-immich) maintained by the [Mother-of-All-Self-Hosting (MASH)](https://github.com/mother-of-all-self-hosting) team.
+
 ## Adjusting the playbook configuration
 
 To enable Immich Kiosk with this role, add the following configuration to your `vars.yml` file.
