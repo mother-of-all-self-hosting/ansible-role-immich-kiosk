@@ -39,12 +39,8 @@ ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} create \
       {% if immich_kiosk_container_http_host_bind_port %}
       -p {{ immich_kiosk_container_http_host_bind_port }}:{{ immich_kiosk_container_http_port }} \
       {% endif %}
-      {% if immich_kiosk_container_ssh_host_bind_port %}
-      -p {{ immich_kiosk_container_ssh_host_bind_port }}:{{ immich_kiosk_container_ssh_port }} \
-      {% endif %}
       --env-file={{ immich_kiosk_base_path }}/env \
       --label-file={{ immich_kiosk_base_path }}/labels \
-      --mount type=bind,src={{ immich_kiosk_data_path }},dst=/immich_kiosk \
       {% for volume in immich_kiosk_container_additional_volumes %}
       --mount type={{ volume.type | default('bind' if '/' in volume.src else 'volume') }},src={{ volume.src }},dst={{ volume.dst }}{{ (',' + volume.options) if volume.options else '' }} \
       {% endfor %}

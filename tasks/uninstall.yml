@@ -37,13 +37,6 @@
         path: "{{ immich_kiosk_container_image_self_build_src_files_path }}"
         state: absent
 
-    - name: Ensure Immich Kiosk local data path does not exist if empty
-      ansible.builtin.command:
-        cmd: "rmdir {{ immich_kiosk_data_path }}"
-      register: immich_kiosk_data_path_deletion_result
-      changed_when: immich_kiosk_data_path_deletion_result.rc == 0
-      failed_when: false
-
     - name: Ensure Immich Kiosk base path does not exist if empty
       ansible.builtin.command:
         cmd: "rmdir {{ immich_kiosk_base_path }}"
@@ -65,21 +58,3 @@
           {{ immich_kiosk_container_network }}
       register: network_deletion_result
       changed_when: immich_kiosk_container_network in network_deletion_result.stdout
-
-- name: Check existence of Immich Kiosk local data path
-  ansible.builtin.stat:
-    path: "{{ immich_kiosk_data_path }}"
-  register: immich_kiosk_data_path_stat
-
-# We just want to notify the user. Deleting data is too destructive.
-- name: Notify if Immich Kiosk local data remains
-  when: immich_kiosk_data_path_stat.stat.exists | bool
-  ansible.builtin.set_fact:
-    devture_playbook_runtime_messages_list: |
-      {{
-        devture_playbook_runtime_messages_list | default([])
-        +
-        [
-          "Note: As the local Immich Kiosk instance has been removed, some old data remains in `" + immich_kiosk_data_path + "`. Feel free to delete it."
-        ]
-      }}

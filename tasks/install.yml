@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 ---
-- name: Ensure Immich Kiosk paths exist
+- name: Ensure Immich Kiosk path exists
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
@@ -13,7 +13,6 @@
     group: "{{ immich_kiosk_gid }}"
   with_items:
     - "{{ immich_kiosk_base_path }}"
-    - "{{ immich_kiosk_data_path }}"
 
 - name: Ensure Immich Kiosk support files installed
   ansible.builtin.template:

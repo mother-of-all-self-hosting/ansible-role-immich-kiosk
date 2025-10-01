@@ -14,7 +14,6 @@ immich_kiosk_enabled: true
 
 immich_kiosk_identifier: immich-kiosk
 immich_kiosk_base_path: "/{{ immich_kiosk_identifier }}"
-immich_kiosk_data_path: "{{ immich_kiosk_base_path }}/data"
 
 # renovate: datasource=docker depName=ghcr.io/damongolding/immich-kiosk
 immich_kiosk_version: 0.24.0
@@ -52,19 +51,11 @@ immich_kiosk_container_image_self_build_src_files_path: "{{ immich_kiosk_base_pa
 # Takes an "<ip>:<port>" or "<port>" value (e.g. "127.0.0.1:2586"), or empty string to not expose.
 immich_kiosk_container_http_host_bind_port: ""
 
-# Controls whether the container exposes its SSH port (tcp/2222 in the container).
-#
-# Takes an "<ip>:<port>" or "<port>" value (e.g. "127.0.0.1:2586"), or empty string to not expose.
-immich_kiosk_container_ssh_host_bind_port: ""
-
 # The base container network. It will be auto-created by this role if it doesn't exist already.
 immich_kiosk_container_network: "{{ immich_kiosk_identifier }}"
 
 # The port number in the container
 immich_kiosk_container_http_port: 3000
-
-# The port number in the container
-immich_kiosk_container_ssh_port: 2222
 
 # A list of additional container networks that the container would be connected to.
 # The role does not create these networks, so make sure they already exist.
@@ -187,42 +178,6 @@ immich_kiosk_systemd_wanted_services_list: "{{ immich_kiosk_systemd_wanted_servi
 immich_kiosk_systemd_wanted_services_list_default: []
 immich_kiosk_systemd_wanted_services_list_auto: []
 immich_kiosk_systemd_wanted_services_list_custom: []
-
-# Specify a random string for signing authentication tokens
-# generated with `openssl rand -hex 32` or in another way.
-immich_kiosk_environment_variables_secret_key: ""
-
-# Specify a database driver to use
-# Valid values: mysql, postgres, sqlite
-immich_kiosk_database_type: sqlite
-
-# Specify database configuration
-immich_kiosk_database_filename: immich_kiosk.db
-immich_kiosk_database_mysql_hostname: ""
-immich_kiosk_database_mysql_port: 3306
-immich_kiosk_database_mysql_username: immich_kiosk
-immich_kiosk_database_mysql_password: ""
-immich_kiosk_database_postgres_hostname: ""
-immich_kiosk_database_postgres_port: 5432
-immich_kiosk_database_postgres_username: immich_kiosk
-immich_kiosk_database_postgres_password: ""
-immich_kiosk_database_name: immich_kiosk
-
-# Specify a log level
-# Valid values: debug, info, warn, error, fatal
-immich_kiosk_environment_variables_log_level: warn
-
-# Specify the log output
-immich_kiosk_environment_variables_log_output: stdout,file
-
-# Control if git operations (clone, pull, push) via HTTP are enabled
-immich_kiosk_environment_variables_http_git_enabled: true
-
-# Control if Prometheus metrics endpoint is enabled at /metrics
-immich_kiosk_environment_variables_metrics_enabled: false
-
-# Control if git operations (clone, pull, push) via SSH are enabled
-immich_kiosk_environment_variables_ssh_git_enabled: true
 
 # Additional environment variables.
 immich_kiosk_environment_variables_additional_variables: ""
