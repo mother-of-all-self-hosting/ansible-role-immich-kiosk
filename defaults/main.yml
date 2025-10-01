@@ -8,7 +8,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 ---
-# Project source code URL: https://github.com/thomiceli/immich_kiosk
+# Project source code URL: https://github.com/damongolding/immich-kiosk
 
 immich_kiosk_enabled: true
 
@@ -16,8 +16,8 @@ immich_kiosk_identifier: immich-kiosk
 immich_kiosk_base_path: "/{{ immich_kiosk_identifier }}"
 immich_kiosk_data_path: "{{ immich_kiosk_base_path }}/data"
 
-# renovate: datasource=docker depName=thomiceli/immich_kiosk
-immich_kiosk_version: 1.11.0
+# renovate: datasource=docker depName=ghcr.io/damongolding/immich-kiosk
+immich_kiosk_version: 0.24.0
 
 immich_kiosk_uid: ""
 immich_kiosk_gid: ""
@@ -34,7 +34,7 @@ immich_kiosk_hostname: ""
 # technical limitations.
 immich_kiosk_path_prefix: /
 
-immich_kiosk_container_image: "{{ immich_kiosk_container_image_registry_prefix }}thomiceli/immich_kiosk:{{ immich_kiosk_container_image_tag }}"
+immich_kiosk_container_image: "{{ immich_kiosk_container_image_registry_prefix }}damongolding/immich-kiosk:{{ immich_kiosk_container_image_tag }}"
 immich_kiosk_container_image_tag: "{{ immich_kiosk_version }}"
 immich_kiosk_container_image_registry_prefix: "{{ immich_kiosk_container_image_registry_prefix_upstream }}"
 immich_kiosk_container_image_registry_prefix_upstream: "{{ immich_kiosk_container_image_registry_prefix_upstream_default }}"
@@ -42,8 +42,8 @@ immich_kiosk_container_image_registry_prefix_upstream_default: ghcr.io/
 immich_kiosk_container_image_force_pull: "{{ immich_kiosk_container_image.endswith(':latest') }}"
 
 immich_kiosk_container_image_self_build: false
-immich_kiosk_container_image_self_build_name: "thomiceli/immich_kiosk:{{ immich_kiosk_container_image_self_build_repo_version }}"
-immich_kiosk_container_image_self_build_repo: "https://github.com/thomiceli/immich_kiosk.git"
+immich_kiosk_container_image_self_build_name: "damongolding/immich-kiosk:{{ immich_kiosk_container_image_self_build_repo_version }}"
+immich_kiosk_container_image_self_build_repo: "https://github.com/damongolding/immich-kiosk.git"
 immich_kiosk_container_image_self_build_repo_version: "{{ 'v' + immich_kiosk_version if immich_kiosk_version != 'latest' else 'main' }}"
 immich_kiosk_container_image_self_build_src_files_path: "{{ immich_kiosk_base_path }}/docker-src"
 
