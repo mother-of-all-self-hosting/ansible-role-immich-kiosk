@@ -54,18 +54,6 @@ immich_kiosk_enabled: true
 ########################################################################
 ```
 
-### Set the hostname
-
-To enable Immich Kiosk you need to set the hostname as well. To do so, add the following configuration to your `vars.yml` file. Make sure to replace `example.com` with your own value.
-
-```yaml
-immich_kiosk_hostname: "example.com"
-```
-
-After adjusting the hostname, make sure to adjust your DNS records to point the domain to your server.
-
-**Note**: hosting Immich Kiosk under a subpath (by configuring the `immich_kiosk_path_prefix` variable) does not seem to be possible due to Immich Kiosk's technical limitations.
-
 ### Set the Immich instance's API key
 
 You also need to obtain and set the API key of your Immich's instance to add the following configuration to your `vars.yml` file:
@@ -107,6 +95,25 @@ immich_kiosk_environment_variables_tz: UTC
 ```
 
 See [this page](https://raw.githubusercontent.com/damongolding/immich-kiosk/refs/heads/main/assets/locales.md) for available language codes and [this page](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List) for available timezones, respectively.
+
+### Exposing the instance (optional)
+
+By default, the Immich Kiosk is not exposed externally, as it is mainly intended to be used in the internal network, connected to the Immich server.
+
+To expose it to the internet, add the following configuration to your `vars.yml` file. Make sure to replace `example.com` with your own value.
+
+```yaml
+immich_kiosk_hostname: "example.com"
+
+immich_kiosk_container_labels_traefik_enabled: true
+```
+
+After adjusting the hostname, make sure to adjust your DNS records to point the domain to your server.
+
+**Note**: hosting Immich Kiosk under a subpath (by configuring the `immich_kiosk_path_prefix` variable) does not seem to be possible due to Immich Kiosk's technical limitations.
+
+>[!NOTE]
+> When exposing the instance, it is recommended to consider to set a password (see [this section](https://docs.immichkiosk.app/configuration/additional-options/#password) for the necessary configuration) as well as enable a service for authentication such as [authentik](https://goauthentik.io/) and [Tinyauth](https://tinyauth.app) based on your use-case.
 
 ### Extending the configuration
 
@@ -158,9 +165,9 @@ If you use the MASH playbook, the shortcut commands with the [`just` program](ht
 
 ## Usage
 
-After running the command for installation, Immich Kiosk becomes available at the specified hostname like `https://example.com`.
+After running the command for installation, Immich Kiosk becomes available internally to other services on the same network. If the service is exposed to the internet, it becomes available at the specified hostname like `https://example.com`.
 
-To get started, open the URL with a web browser or devices. Refer to [the documentation](https://docs.immichkiosk.app/guides/digital-picture-frame-immich-kiosk-old-tablet/) and other pages for guides to display pictures on them.
+To get started, refer to [the documentation](https://docs.immichkiosk.app/guides/digital-picture-frame-immich-kiosk-old-tablet/) and other pages for guides about how to display pictures on devices.
 
 ## Troubleshooting
 

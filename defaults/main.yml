@@ -77,7 +77,7 @@ immich_kiosk_container_additional_volumes_custom: []
 # See `../templates/labels.j2` for details.
 #
 # To inject your own other container labels, see `immich_kiosk_container_labels_additional_labels`.
-immich_kiosk_container_labels_traefik_enabled: true
+immich_kiosk_container_labels_traefik_enabled: false
 immich_kiosk_container_labels_traefik_docker_network: "{{ immich_kiosk_container_network }}"
 immich_kiosk_container_labels_traefik_hostname: "{{ immich_kiosk_hostname }}"
 # The path prefix must either be `/` or not end with a slash (e.g. `/immich_kiosk`).

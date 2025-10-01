@@ -14,7 +14,6 @@
   with_items:
     - immich_kiosk_uid
     - immich_kiosk_gid
-    - immich_kiosk_hostname
     - immich_kiosk_path_prefix
     - immich_kiosk_container_network
     - immich_kiosk_environment_variables_kiosk_immich_api_key
