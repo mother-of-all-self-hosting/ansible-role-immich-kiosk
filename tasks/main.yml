@@ -4,24 +4,24 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 ---
-- name: Perform Opengist installation tasks
-  when: opengist_enabled | bool
+- name: Perform Immich Kiosk installation tasks
+  when: immich_kiosk_enabled | bool
   tags:
     - setup-all
-    - setup-opengist
+    - setup-immich-kiosk
     - install-all
-    - install-opengist
+    - install-immich-kiosk
   block:
-    - name: Validate Opengist configuration
+    - name: Validate Immich Kiosk configuration
       ansible.builtin.include_tasks: "{{ role_path }}/tasks/validate_config.yml"
-    - name: Install Opengist
+    - name: Install Immich Kiosk
       ansible.builtin.include_tasks: "{{ role_path }}/tasks/install.yml"
 
-- name: Perform Opengist uninstallation tasks
-  when: not opengist_enabled | bool
+- name: Perform Immich Kiosk uninstallation tasks
+  when: not immich_kiosk_enabled | bool
   tags:
     - setup-all
-    - setup-opengist
+    - setup-immich-kiosk
   block:
-    - name: Uninstall Opengist
+    - name: Uninstall Immich Kiosk
       ansible.builtin.include_tasks: "{{ role_path }}/tasks/uninstall.yml"
