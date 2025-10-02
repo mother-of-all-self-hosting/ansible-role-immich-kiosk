@@ -151,7 +151,7 @@ immich_kiosk_environment_variables_additional_variables: |
 ```
 
 >[!NOTE]
-> The weather location overlay can only be configured using a `config.yaml` file with an API key from [OpenWeatherMap](https://openweathermap.org/). See [this page](https://docs.immichkiosk.app/configuration/weather/) for details. To use the file, you manually need to mount it to the container with `immich_kiosk_container_additional_volumes_custom` avoiding the configuration with environment variables alltogether.
+> The weather location overlay can only be configured using a `config.yaml` file with an API key from [OpenWeatherMap](https://openweathermap.org/). See [this page](https://docs.immichkiosk.app/configuration/weather/) for details. To use the file, you manually need to mount it to the container with `immich_kiosk_container_additional_volumes_custom` avoiding the configuration with environment variables altogether.
 
 ## Installing
 
