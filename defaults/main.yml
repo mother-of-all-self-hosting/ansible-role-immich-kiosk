@@ -192,6 +192,10 @@ immich_kiosk_environment_variables_tz: Europe/London
 # Ref: https://docs.immichkiosk.app/configuration/additional-options/#disable-url-queries
 immich_kiosk_environment_variables_kiosk_behind_proxy: false
 
+# Controls if overriding config options via the URL should be possible
+# Ref: https://docs.immichkiosk.app/configuration/additional-options/#disable-url-queries
+immich_kiosk_environment_variables_kiosk_disable_url_queries: false
+
 # Specify the API for your Immich server
 immich_kiosk_environment_variables_kiosk_immich_api_key: ""
 
