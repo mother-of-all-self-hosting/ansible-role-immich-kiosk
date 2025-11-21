@@ -187,6 +187,11 @@ immich_kiosk_environment_variables_lang: en_GB
 # See: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
 immich_kiosk_environment_variables_tz: Europe/London
 
+# Controls if Immich Proxy will consider itself behind a reverse-proxy or not.
+# Enabling will make Kiosk look up the X-Forwarded-For header to determine the client's IP address, which is used to create a unique device ID for each client.
+# Ref: https://docs.immichkiosk.app/configuration/additional-options/#disable-url-queries
+immich_kiosk_environment_variables_kiosk_behind_proxy: false
+
 # Specify the API for your Immich server
 immich_kiosk_environment_variables_kiosk_immich_api_key: ""
 
