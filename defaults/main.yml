@@ -179,13 +179,13 @@ immich_kiosk_systemd_wanted_services_list_default: []
 immich_kiosk_systemd_wanted_services_list_auto: []
 immich_kiosk_systemd_wanted_services_list_custom: []
 
+# Specify the timezone
+# See: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
+immich_kiosk_environment_variables_tz: UTC
+
 # Specify the language code
 # See: https://raw.githubusercontent.com/damongolding/immich-kiosk/refs/heads/main/assets/locales.md
 immich_kiosk_environment_variables_lang: en_GB
-
-# Specify the timezone
-# See: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
-immich_kiosk_environment_variables_tz: Europe/London
 
 # Controls if Immich Proxy will consider itself behind a reverse-proxy or not.
 # Enabling will make Kiosk look up the X-Forwarded-For header to determine the client's IP address, which is used to create a unique device ID for each client.
