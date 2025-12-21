@@ -26,7 +26,7 @@ immich_kiosk_scheme: https
 # The hostname at which Immich Kiosk is served.
 immich_kiosk_hostname: ""
 
-# The path at which Immich Kiosk is exposed.
+# The path at which Immich Kiosk is served.
 # This value must either be `/` or not end with a slash (e.g. `/immich-kiosk`).
 #
 # Hosting Immich Kiosk under a subpath does not seem to be possible due to Immich Kiosk's
