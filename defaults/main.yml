@@ -120,7 +120,7 @@ immich_kiosk_container_labels_additional_labels: "{{ immich_kiosk_container_labe
 immich_kiosk_container_labels_additional_labels_auto: {}
 immich_kiosk_container_labels_additional_labels_custom: {}
 
-# A list of extra arguments to pass to the container (`docker run` command)
+# A list of extra arguments to pass to the container (`docker create` command)
 immich_kiosk_container_extra_arguments: "{{ immich_kiosk_container_extra_arguments_auto + immich_kiosk_container_extra_arguments_custom }}"
 immich_kiosk_container_extra_arguments_auto: []
 immich_kiosk_container_extra_arguments_custom: []
