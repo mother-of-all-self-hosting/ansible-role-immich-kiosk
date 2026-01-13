@@ -21,6 +21,7 @@ immich_kiosk_version: 0.30.1
 immich_kiosk_uid: ""
 immich_kiosk_gid: ""
 
+# The scheme used for serving Immich Kiosk.
 immich_kiosk_scheme: https
 
 # The hostname at which Immich Kiosk is served.
@@ -46,7 +47,7 @@ immich_kiosk_container_image_self_build_repo: "https://github.com/damongolding/i
 immich_kiosk_container_image_self_build_repo_version: "{{ 'v' + immich_kiosk_version if immich_kiosk_version != 'latest' else 'main' }}"
 immich_kiosk_container_image_self_build_src_files_path: "{{ immich_kiosk_base_path }}/docker-src"
 
-# Controls whether the container exposes its HTTP port (tcp/6157 in the container).
+# Controls whether the container exposes its HTTP port (tcp/3000 in the container).
 #
 # Takes an "<ip>:<port>" or "<port>" value (e.g. "127.0.0.1:2586"), or empty string to not expose.
 immich_kiosk_container_http_host_bind_port: ""
@@ -80,7 +81,7 @@ immich_kiosk_container_additional_volumes_custom: []
 immich_kiosk_container_labels_traefik_enabled: false
 immich_kiosk_container_labels_traefik_docker_network: "{{ immich_kiosk_container_network }}"
 immich_kiosk_container_labels_traefik_hostname: "{{ immich_kiosk_hostname }}"
-# The path prefix must either be `/` or not end with a slash (e.g. `/immich_kiosk`).
+# The path prefix must either be `/` or not end with a slash (e.g. `/immich-kiosk`).
 immich_kiosk_container_labels_traefik_path_prefix: "{{ immich_kiosk_path_prefix }}"
 immich_kiosk_container_labels_traefik_rule: "Host(`{{ immich_kiosk_container_labels_traefik_hostname }}`){% if immich_kiosk_container_labels_traefik_path_prefix != '/' %} && PathPrefix(`{{ immich_kiosk_container_labels_traefik_path_prefix }}`){% endif %}"
 immich_kiosk_container_labels_traefik_priority: 0
