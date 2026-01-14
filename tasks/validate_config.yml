@@ -44,5 +44,5 @@
     - name: Fail if immich_kiosk_container_labels_traefik_path_prefix ends with a slash
       ansible.builtin.fail:
         msg: >-
-          immich_kiosk_container_labels_traefik_path_prefix (`{{ immich_kiosk_container_labels_traefik_path_prefix }}`) must either be `/` or not end with a slash (e.g. `/immich_kiosk`).
+          immich_kiosk_container_labels_traefik_path_prefix (`{{ immich_kiosk_container_labels_traefik_path_prefix }}`) must either be `/` or not end with a slash (e.g. `/immich-kiosk`).
       when: "immich_kiosk_container_labels_traefik_path_prefix != '/' and immich_kiosk_container_labels_traefik_path_prefix[-1] == '/'"
