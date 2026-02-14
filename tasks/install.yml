@@ -76,8 +76,8 @@
       environment:
         DOCKER_BUILDKIT: "1"
         PYTHON: "/usr/bin/python3"
-      register: result
-      changed_when: "'Successfully built' in result.stdout or ('writing image' in result.stderr and 'CACHED' not in result.stderr)"
+      register: immich_kiosk_container_image_build_result
+      changed_when: "'Successfully built' in immich_kiosk_container_image_build_result.stdout or ('writing image' in immich_kiosk_container_image_build_result.stderr and 'CACHED' not in immich_kiosk_container_image_build_result.stderr)"
 
 - name: Ensure Immich Kiosk container network is created via community.docker.docker_network
   when: devture_systemd_docker_base_container_network_creation_method == 'ansible-module'
@@ -113,4 +113,5 @@
         immich_kiosk_support_files_result.changed | default(false)
         or immich_kiosk_systemd_service_result.changed | default(false)
         or immich_kiosk_container_image_pull_result.changed | default(false)
+        or immich_kiosk_container_image_build_result.changed | default(false)
       }}
