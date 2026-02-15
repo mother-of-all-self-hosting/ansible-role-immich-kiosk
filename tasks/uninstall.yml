@@ -24,21 +24,24 @@
         path: "{{ devture_systemd_docker_base_systemd_path }}/{{ immich_kiosk_identifier }}.service"
         state: absent
 
-    - name: Ensure Immich Kiosk container network does not exist via community.docker.docker_network
-      when: devture_systemd_docker_base_container_network_creation_method == 'ansible-module'
-      community.docker.docker_network:
-        name: "{{ immich_kiosk_container_network }}"
-        state: absent
-      register: immich_kiosk_network_deletion_result
+    - name: Ensure Immich Kiosk container network does not exist
+      when: immich_kiosk_container_network_deletion_enabled
+      block:
+        - name: Ensure Immich Kiosk container network does not exist via community.docker.docker_network
+          when: devture_systemd_docker_base_container_network_creation_method == 'ansible-module'
+          community.docker.docker_network:
+            name: "{{ immich_kiosk_container_network }}"
+            state: absent
+          register: immich_kiosk_network_deletion_result
 
-    - name: Ensure Immich Kiosk container network does not exist via ansible.builtin.command
-      when: devture_systemd_docker_base_container_network_creation_method == 'command'
-      ansible.builtin.command:
-        cmd: >-
-          {{ devture_systemd_docker_base_host_command_docker }} network rm
-          {{ immich_kiosk_container_network }}
-      register: immich_kiosk_network_deletion_result
-      changed_when: immich_kiosk_container_network in immich_kiosk_network_deletion_result.stdout
+        - name: Ensure Immich Kiosk container network does not exist via ansible.builtin.command
+          when: devture_systemd_docker_base_container_network_creation_method == 'command'
+          ansible.builtin.command:
+            cmd: >-
+              {{ devture_systemd_docker_base_host_command_docker }} network rm
+              {{ immich_kiosk_container_network }}
+          register: immich_kiosk_network_deletion_result
+          changed_when: immich_kiosk_container_network in immich_kiosk_network_deletion_result.stdout
 
     - name: Ensure Immich Kiosk path does not exist
       ansible.builtin.file:
