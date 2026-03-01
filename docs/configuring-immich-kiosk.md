@@ -91,6 +91,7 @@ You can customize the language of the UI and the timezone for the clock on it:
 ```yaml
 immich_kiosk_environment_variables_lang: en_GB
 
+# Specify the timezone
 immich_kiosk_environment_variables_tz: UTC
 ```
 
