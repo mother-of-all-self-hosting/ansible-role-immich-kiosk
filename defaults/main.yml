@@ -39,7 +39,6 @@ immich_kiosk_container_image_tag: "{{ immich_kiosk_version }}"
 immich_kiosk_container_image_registry_prefix: "{{ immich_kiosk_container_image_registry_prefix_upstream }}"
 immich_kiosk_container_image_registry_prefix_upstream: "{{ immich_kiosk_container_image_registry_prefix_upstream_default }}"
 immich_kiosk_container_image_registry_prefix_upstream_default: ghcr.io/
-immich_kiosk_container_image_force_pull: "{{ immich_kiosk_container_image.endswith(':latest') }}"
 
 immich_kiosk_container_image_self_build: false
 immich_kiosk_container_image_self_build_name: "damongolding/immich-kiosk:{{ immich_kiosk_container_image_self_build_repo_version }}"
