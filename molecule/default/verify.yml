@@ -1,0 +1,47 @@
+# SPDX-FileCopyrightText: 2026 Suguru Hirahara
+# SPDX-FileCopyrightText: 2026 spatterlight
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+---
+- name: Verify Immich Kiosk systemd service
+  hosts: all
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Wait for Immich Kiosk service to become active (up to 180s)
+      ansible.builtin.systemd:
+        name: immich-kiosk.service
+      register: immich_kiosk_service
+      until: immich_kiosk_service.status.ActiveState == 'active'
+      retries: 36
+      delay: 5
+
+    - name: Assert Immich Kiosk service is active
+      ansible.builtin.assert:
+        that: immich_kiosk_service.status.ActiveState == 'active'
+        fail_msg: "immich-kiosk.service not active ({{ immich_kiosk_service.status.ActiveState }})"
+        success_msg: "immich-kiosk.service is active"
+
+    - name: Wait for Immich Kiosk HTTP endpoint to respond (up to 10m)
+      ansible.builtin.uri:
+        url: "http://localhost:3000/"
+        method: GET
+        status_code: [200, 302]
+        follow_redirects: none
+      register: immich_kiosk_endpoint
+      until: immich_kiosk_endpoint.status in [200, 302]
+      retries: 120
+      delay: 5
+
+    - name: Assert Immich Kiosk HTTP endpoint responds
+      ansible.builtin.assert:
+        that: immich_kiosk_endpoint.status in [200, 302]
+        fail_msg: "Immich Kiosk did not respond as expected ({{ immich_kiosk_endpoint.status | default('no response') }})"
+        success_msg: "Immich Kiosk responded with {{ immich_kiosk_endpoint.status }}"
+
+    - name: Show Immich Kiosk systemd service status summary
+      ansible.builtin.debug:
+        msg:
+          - "Immich Kiosk systemd: {{ immich_kiosk_service.status.ActiveState }}"
+          - "Immich Kiosk HTTP: {{ immich_kiosk_endpoint.status }}"
