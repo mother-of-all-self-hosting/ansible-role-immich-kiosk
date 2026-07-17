@@ -33,7 +33,8 @@ provisioner:
         # Variables for Immich Kiosk
         immich_kiosk_uid: 1000
         immich_kiosk_gid: 1000
-        immich_kiosk_hostname: immich-kiosk
+        immich_kiosk_scheme: http
+        immich_kiosk_hostname: localhost
         immich_kiosk_container_labels_traefik_enabled: false
         immich_kiosk_container_http_host_bind_port: 3000
         immich_kiosk_environment_variables_kiosk_immich_api_key: apikey
