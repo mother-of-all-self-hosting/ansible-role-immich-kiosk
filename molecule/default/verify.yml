@@ -23,6 +23,12 @@
         fail_msg: "immich-kiosk.service not active ({{ immich_kiosk_service.status.ActiveState }})"
         success_msg: "immich-kiosk.service is active"
 
+    - name: Retrieve Immich Kiosk service log for debugging
+      when: immich_kiosk_debug_service_enabled | bool
+      ansible.builtin.command:
+        cmd: journalctl -xeu immich-kiosk.service
+      changed_when: false
+
     - name: Wait for Immich Kiosk HTTP endpoint to respond (up to 10m)
       ansible.builtin.uri:
         url: "http://localhost:3000/"

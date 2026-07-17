@@ -27,6 +27,10 @@ provisioner:
   inventory:
     group_vars:
       all:
+        # Helper variables
+        immich_kiosk_debug_service_enabled: false
+
+        # Variables for Immich Kiosk
         immich_kiosk_uid: 1000
         immich_kiosk_gid: 1000
         immich_kiosk_hostname: immich-kiosk
