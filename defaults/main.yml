@@ -15,7 +15,7 @@ immich_kiosk_enabled: true
 immich_kiosk_identifier: immich-kiosk
 immich_kiosk_base_path: "/{{ immich_kiosk_identifier }}"
 
-# renovate: datasource=docker depName=ghcr.io/damongolding/immich-kiosk
+# renovate: datasource=docker depName=ghcr.io/damongolding/immich-kiosk versioning=semver
 immich_kiosk_version: 0.42.0
 
 immich_kiosk_uid: ""
