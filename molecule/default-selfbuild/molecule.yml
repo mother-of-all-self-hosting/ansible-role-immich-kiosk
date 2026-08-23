@@ -13,7 +13,7 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: immich-kiosk-default-selfbuild-${MOLECULE_DISTRO:-ubuntu2604}
+  - name: immich-kiosk-${MOLECULE_DISTRO:-ubuntu2604}-default-selfbuild
     image: "geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu2604}-ansible:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
