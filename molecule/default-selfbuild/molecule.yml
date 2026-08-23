@@ -1,5 +1,6 @@
 # SPDX-FileCopyrightText: 2026 Suguru Hirahara
 # SPDX-FileCopyrightText: 2026 spatterlight
+# SPDX-FileCopyrightText: 2026 Slavi Pantaleev
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
@@ -12,7 +13,7 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: immich-kiosk-${MOLECULE_DISTRO:-ubuntu2604}-default
+  - name: immich-kiosk-default-selfbuild-${MOLECULE_DISTRO:-ubuntu2604}
     image: "geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu2604}-ansible:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
@@ -30,6 +31,11 @@ provisioner:
       all:
         # Helper variables
         immich_kiosk_debug_service_enabled: false
+
+        # A self-built image gets its version stamped in at build time by upstream's
+        # Dockerfile, which is free to report something other than the tag it was
+        # built from. Self-building is verified here, not upstream's version stamping.
+        immich_kiosk_verify_version_enabled: false
 
         # Variables for Immich Kiosk
         immich_kiosk_uid: 1000
