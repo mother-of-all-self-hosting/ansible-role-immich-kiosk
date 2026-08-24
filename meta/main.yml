@@ -3,7 +3,7 @@ galaxy_info:
   author: Suguru Hirahara
   company: progressiv
   role_name: immich_kiosk
-  namespace: progressiv
+  namespace: mash
   description: Immich Kiosk
   platforms:
     - name: Debian
