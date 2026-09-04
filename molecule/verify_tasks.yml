@@ -119,8 +119,8 @@
     that: >-
       '<meta name="version" content="' ~ immich_kiosk_defaults.immich_kiosk_version ~ '">'
       in immich_kiosk_endpoint.content
-    fail_msg: "The running Immich Kiosk is not version {{ immich_kiosk_defaults.immich_kiosk_version }}"
-    success_msg: "The running Immich Kiosk reports version {{ immich_kiosk_defaults.immich_kiosk_version }}"
+    fail_msg: "Immich Kiosk does not report {{ immich_kiosk_defaults.immich_kiosk_version }}"
+    success_msg: "Immich Kiosk reports {{ immich_kiosk_defaults.immich_kiosk_version }}"
 
 # A second, independent surface for the same version, on a page that is
 # templated differently from the slideshow one.
@@ -138,14 +138,14 @@
     fail_msg: "The Immich Kiosk about page did not render as expected"
     success_msg: "The Immich Kiosk about page is rendered"
 
-- name: Assert the about page reports the version this role installs
+- name: Assert the running Immich Kiosk is the version this role installs
   when: immich_kiosk_verify_version_enabled | bool
   ansible.builtin.assert:
     that: >-
       '>v' ~ immich_kiosk_defaults.immich_kiosk_version ~ '<'
       in immich_kiosk_about.content
-    fail_msg: "The about page does not report version {{ immich_kiosk_defaults.immich_kiosk_version }}"
-    success_msg: "The about page reports version {{ immich_kiosk_defaults.immich_kiosk_version }}"
+    fail_msg: "Immich Kiosk about page does not report {{ immich_kiosk_defaults.immich_kiosk_version }}"
+    success_msg: "Immich Kiosk about page reports {{ immich_kiosk_defaults.immich_kiosk_version }}"
 
 - name: Show the Immich Kiosk verification summary
   ansible.builtin.debug:
