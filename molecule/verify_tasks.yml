@@ -5,12 +5,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 ---
-# Role defaults are not in scope in a verify playbook, but the version that
-# Renovate bumps lives in them and is what the running Kiosk is checked
-# against below. Only plain literal values may be read out of this namespace:
-# the defaults that are Jinja expressions would be evaluated against
-# variables that do not exist here.
-- name: Load the Immich Kiosk role defaults
+# The role is not included in this playbook, so its defaults are not in
+# scope. Reading defaults/main.yml directly ties the version assertion
+# below.
+- name: Load the role defaults
   ansible.builtin.include_vars:
     file: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/defaults/main.yml"
     name: immich_kiosk_defaults
