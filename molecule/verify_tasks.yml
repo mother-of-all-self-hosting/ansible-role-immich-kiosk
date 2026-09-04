@@ -147,7 +147,7 @@
     fail_msg: "The about page does not report version {{ immich_kiosk_defaults.immich_kiosk_version }}"
     success_msg: "The about page reports version {{ immich_kiosk_defaults.immich_kiosk_version }}"
 
-- name: Show Immich Kiosk verification summary
+- name: Show the Immich Kiosk verification summary
   ansible.builtin.debug:
     msg:
       - "Immich Kiosk systemd: {{ immich_kiosk_service.status.ActiveState }}"
