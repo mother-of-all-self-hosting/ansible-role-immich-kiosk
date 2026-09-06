@@ -58,14 +58,14 @@
 - name: Inspect the running Immich Kiosk container
   ansible.builtin.command:
     cmd: "docker container inspect {{ immich_kiosk_defaults.immich_kiosk_identifier }}"
-  register: immich_kiosk_container_inspect
+  register: immich_kiosk_container_raw
   changed_when: false
 
 - name: Assert the configured Immich server reached the container environment
   ansible.builtin.assert:
     that: >-
       'KIOSK_IMMICH_URL=' ~ immich_kiosk_environment_variables_kiosk_immich_url
-      in (immich_kiosk_container_inspect.stdout | from_json | first).Config.Env
+      in (immich_kiosk_container_raw.stdout | from_json | first).Config.Env
     fail_msg: "The container environment does not carry the configured Immich server URL"
     success_msg: "The container environment carries the configured Immich server URL"
 
