@@ -36,7 +36,7 @@
 - name: Retrieve the Immich Kiosk systemd service log for debugging
   when: immich_kiosk_debug_service_enabled | bool
   ansible.builtin.command:
-    cmd: journalctl -xeu immich-kiosk.service
+    cmd: journalctl --no-pager --output=cat --unit=immich-kiosk.service
   changed_when: false
 
 - name: Read the environment file this role rendered
