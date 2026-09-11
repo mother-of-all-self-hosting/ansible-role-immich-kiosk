@@ -13,13 +13,14 @@
     file: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/defaults/main.yml"
     name: immich_kiosk_defaults
 
-- name: Wait for the Immich Kiosk systemd service to become active (up to 180s)
+- name: Wait for the Immich Kiosk systemd services to become active (up to 180s each)
   ansible.builtin.systemd_service:
-    name: immich-kiosk.service
-  register: immich_kiosk_service
-  until: immich_kiosk_service.status.ActiveState == 'active'
+    name: "{{ item }}"
+  register: immich_kiosk_services
+  until: immich_kiosk_services.status.ActiveState == 'active'
   retries: 36
   delay: 5
+  loop: "{{ immich_kiosk_verify_units }}"
   # So that giving up is reported by the assertion below rather than as a
   # wall of systemd unit properties.
   failed_when: false
@@ -27,17 +28,20 @@
 # `Restart=always` in the systemd unit means that even a container which crashes
 # and gets restarted reads as active here, so this is a precondition rather than
 # a result.
-- name: Assert the Immich Kiosk systemd service is active
+- name: Assert the Immich Kiosk systemd services are active
   ansible.builtin.assert:
-    that: immich_kiosk_service.status.ActiveState == 'active'
-    fail_msg: "immich-kiosk.service is not active ({{ immich_kiosk_service.status.ActiveState }})"
-    success_msg: "immich-kiosk.service is active"
+    that: immich_kiosk_services.results | map(attribute='status.ActiveState') | unique | list == ['active']
+    fail_msg: >-
+      Not every service is active:
+      {{ dict(immich_kiosk_verify_units | zip(immich_kiosk_services.results | map(attribute='status.ActiveState'))) }}
+    success_msg: "Every systemd service is active"
 
-- name: Retrieve the Immich Kiosk systemd service log for debugging
+- name: Retrieve the Immich Kiosk systemd services log for debugging
   when: immich_kiosk_debug_service_enabled | bool
   ansible.builtin.command:
-    cmd: journalctl --no-pager --output=cat --unit=immich-kiosk.service
+    cmd: "journalctl --no-pager --output=cat --unit={{ item }}"
   changed_when: false
+  loop: "{{ immich_kiosk_verify_units }}"
 
 - name: Read the environment file this role rendered
   ansible.builtin.slurp:
@@ -156,7 +160,7 @@
 - name: Show the Immich Kiosk verification summary
   ansible.builtin.debug:
     msg:
-      - "Immich Kiosk systemd: {{ immich_kiosk_service.status.ActiveState }}"
+      - "Immich Kiosk systemd: {% for unit, state in immich_kiosk_verify_units | zip(immich_kiosk_services.results | map(attribute='status.ActiveState')) %}{{ unit }} ({{ state }}){% if not loop.last %}, {% endif %}{% endfor %}"
       - "Immich Kiosk health: {{ immich_kiosk_health.content | trim }}"
       - "Immich Kiosk slideshow page: {{ immich_kiosk_endpoint.status }}"
       - "Immich Kiosk about page: {{ immich_kiosk_about.status }}"

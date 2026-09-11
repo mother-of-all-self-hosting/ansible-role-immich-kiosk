@@ -9,6 +9,11 @@
   hosts: all
   become: true
   gather_facts: false
+
+  vars:
+    immich_kiosk_verify_units:
+      - immich-kiosk.service
+
   tasks:
     - name: Verify that Immich Kiosk works
       block:
