@@ -83,21 +83,24 @@
 # all - it logs "Immich URL is missing" and exits non-zero, serving nothing.
 # A Kiosk answering here is therefore one that read and accepted the
 # configuration this role rendered, not merely a container that came up.
-- name: Wait for the Immich Kiosk health endpoint to respond (up to 10m)
+- name: Wait for Immich Kiosk to report itself healthy (up to 180s)
   ansible.builtin.uri:
     url: "http://localhost:{{ immich_kiosk_container_http_host_bind_port }}/health"
     method: GET
     return_content: true
   register: immich_kiosk_health
-  until: immich_kiosk_health.status == 200
-  retries: 120
+  until: immich_kiosk_health.status == 200 and immich_kiosk_health.content == 'OK'
+  retries: 36
   delay: 5
+  # So that giving up is reported by the assertion below rather than as a
+  # wall of systemd unit properties.
+  failed_when: false
 
-- name: Assert the Immich Kiosk health endpoint reports itself healthy
+- name: Assert Immich Kiosk reports itself healthy
   ansible.builtin.assert:
-    that: immich_kiosk_health.content | trim == 'OK'
-    fail_msg: "The health endpoint answered {{ immich_kiosk_health.content | trim }} instead of OK"
-    success_msg: "The health endpoint reports OK"
+    that: immich_kiosk_health.content == 'OK'
+    fail_msg: "Immich Kiosk did not report itself healthy: {{ immich_kiosk_health.content | default('no response') }}"
+    success_msg: "Immich Kiosk reports itself healthy"
 
 # The slideshow page is rendered server-side from the loaded configuration:
 # its container element carries a request signature and a device identifier
