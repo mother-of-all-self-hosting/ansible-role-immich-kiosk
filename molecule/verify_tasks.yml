@@ -67,7 +67,7 @@
 # collide with Jinja.
 - name: Inspect the running Immich Kiosk container
   ansible.builtin.command:
-    cmd: "docker container inspect {{ immich_kiosk_defaults.immich_kiosk_identifier }}"
+    cmd: docker container inspect immich-kiosk
   register: immich_kiosk_container_raw
   changed_when: false
 
