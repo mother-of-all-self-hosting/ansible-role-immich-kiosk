@@ -31,6 +31,7 @@ provisioner:
       all:
         # Helper variables
         immich_kiosk_debug_service_enabled: false
+        immich_kiosk_restarts_check_enabled: true
 
         # A self-built image gets its version stamped in at build time by upstream's
         # Dockerfile, which is free to report something other than the tag it was

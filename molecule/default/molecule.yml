@@ -31,6 +31,7 @@ provisioner:
       all:
         # Helper variables
         immich_kiosk_debug_service_enabled: false
+        immich_kiosk_restarts_check_enabled: true
 
         # The published container images are built from the tagged release, so the
         # version they report is the one this role pins and can be asserted against.
