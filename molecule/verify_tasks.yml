@@ -79,6 +79,13 @@
     fail_msg: "The container environment does not carry the configured Immich server URL"
     success_msg: "The container environment carries the configured Immich server URL"
 
+- name: Assert compatibility settings reached the running container
+  ansible.builtin.assert:
+    that:
+      - item in (immich_kiosk_env_file.content | b64decode).splitlines()
+      - item in (immich_kiosk_container_raw.stdout | from_json | first).Config.Env
+  loop: "{{ immich_kiosk_verify_environment | default([]) }}"
+
 # An Immich Kiosk that was not given an Immich server URL refuses to start at
 # all - it logs "Immich URL is missing" and exits non-zero, serving nothing.
 # A Kiosk answering here is therefore one that read and accepted the
@@ -101,6 +108,26 @@
     that: immich_kiosk_health.content == 'OK'
     fail_msg: "Immich Kiosk did not report itself healthy: {{ immich_kiosk_health.content | default('no response') }}"
     success_msg: "Immich Kiosk reports itself healthy"
+
+- name: Verify Immich Kiosk loaded the migrated overlay settings
+  when: immich_kiosk_verify_environment is defined
+  block:
+    - name: Retrieve the effective Immich Kiosk configuration
+      ansible.builtin.uri:
+        url: "http://localhost:{{ immich_kiosk_container_http_host_bind_port }}/config"
+        return_content: true
+      register: immich_kiosk_effective_config
+
+    - name: Assert legacy preferences and explicit overrides were preserved
+      ansible.builtin.assert:
+        that:
+          - overlay.display
+          - not overlay.show.asset_link
+          - not overlay.show.qr_code
+          - overlay.like_button_action == ['album']
+          - overlay.hide_button_action == ['archive']
+      vars:
+        overlay: "{{ (immich_kiosk_effective_config.content | from_yaml).more_info }}"
 
 # The slideshow page is rendered server-side from the loaded configuration:
 # its container element carries a request signature and a device identifier

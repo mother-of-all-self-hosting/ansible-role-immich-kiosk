@@ -46,6 +46,21 @@ provisioner:
         immich_kiosk_container_http_host_bind_port: 3000
         immich_kiosk_environment_variables_kiosk_immich_api_key: apikey
         immich_kiosk_environment_variables_kiosk_immich_url: https://example.com
+        # Exercise legacy aliases, duplicate values, and explicit current overrides.
+        immich_kiosk_environment_variables_additional_variables: |
+          KIOSK_SHOW_MORE_INFO=false
+          KIOSK_MORE_INFO_DISPLAY=true
+          KIOSK_SHOW_MORE_INFO_IMAGE_LINK=false
+          KIOSK_SHOW_MORE_INFO_QR_CODE=true
+          KIOSK_SHOW_MORE_INFO_QR_CODE=false
+          KIOSK_LIKE_BUTTON_ACTION=album
+          KIOSK_HIDE_BUTTON_ACTION=archive
+        immich_kiosk_verify_environment:
+          - KIOSK_MORE_INFO_DISPLAY=true
+          - KIOSK_MORE_INFO_SHOW_ASSET_LINK=false
+          - KIOSK_MORE_INFO_SHOW_QR_CODE=false
+          - KIOSK_MORE_INFO_LIKE_BUTTON_ACTION=album
+          - KIOSK_MORE_INFO_HIDE_BUTTON_ACTION=archive
   env:
     # Workaround for https://github.com/ansible/molecule/issues/4391
     ANSIBLE_ROLES_PATH: ${MOLECULE_PROJECT_DIRECTORY}/..:/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles:~/.ansible/roles

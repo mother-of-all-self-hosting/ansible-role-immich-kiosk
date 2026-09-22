@@ -126,6 +126,8 @@ Take a look at:
 
 Refer to [the official documentation](https://docs.immichkiosk.app/configuration/) for a complete list of Immich Kiosk's config options that you can put in `immich_kiosk_environment_variables_additional_variables`.
 
+The role also renders current equivalents for the legacy environment settings `KIOSK_SHOW_MORE_INFO`, `KIOSK_SHOW_MORE_INFO_IMAGE_LINK`, `KIOSK_SHOW_MORE_INFO_QR_CODE`, `KIOSK_LIKE_BUTTON_ACTION`, and `KIOSK_HIDE_BUTTON_ACTION`. Explicit `KIOSK_MORE_INFO_*` settings take precedence over their legacy equivalents. This compatibility mapping applies to `immich_kiosk_environment_variables_additional_variables`; custom mounted configuration files remain user-managed.
+
 #### Configuration example (demo style UI)
 
 As the Immich Kiosk is highly customizable, the default UI is pretty simple, and it is necessary for most of the settings and features to be enabled explicitly. Refer to <https://docs.immichkiosk.app/configuration/> for details about available options, such as selecting an album to include / exclude from being displayed.
