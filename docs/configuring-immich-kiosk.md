@@ -62,7 +62,7 @@ You also need to obtain and set the API key of your Immich's instance to add the
 immich_kiosk_environment_variables_kiosk_immich_api_key: YOUR_IMMICH_INSTANCE_API_KEY_HERE
 ```
 
-It is possible to obtain the API key in the user setting panel on the web interface. See [this section](https://docs.immich.app/features/command-line-interface#obtain-the-api-key) on the Immich's documentation for details.
+It is possible to obtain the API key in the user setting panel on the web interface. Refer to [this section](https://docs.immich.app/features/command-line-interface#obtain-the-api-key) on the Immich's documentation for details.
 
 Refer to [this section](https://docs.immichkiosk.app/installation/#api-key-permissions) on the documentation of Immich Kiosk for necessary permissions.
 
@@ -82,7 +82,7 @@ It is possible to specify the public URL of your Immich server used for generati
 immich_kiosk_environment_variables_kiosk_immich_external_url: YOUR_IMMICH_INSTANCE_EXTERNAL_URL_HERE
 ```
 
-See [this page](https://docs.immichkiosk.app/configuration/core/) on the documentation for details.
+Refer to [this page](https://docs.immichkiosk.app/configuration/core/) on the documentation for details.
 
 ### Set regional preferences (optional)
 
@@ -95,7 +95,7 @@ immich_kiosk_environment_variables_lang: en_GB
 immich_kiosk_environment_variables_tz: UTC
 ```
 
-See [this page](https://raw.githubusercontent.com/damongolding/immich-kiosk/refs/heads/main/assets/locales.md) for available language codes and [this page](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List) for available timezones, respectively.
+Refer to [this page](https://raw.githubusercontent.com/damongolding/immich-kiosk/refs/heads/main/assets/locales.md) for available language codes and [this page](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List) for available timezones, respectively.
 
 ### Exposing the instance (optional)
 
@@ -114,7 +114,7 @@ After adjusting the hostname, make sure to adjust your DNS records to point the 
 **Note**: hosting Immich Kiosk under a subpath (by configuring the `immich_kiosk_path_prefix` variable) does not seem to be possible due to Immich Kiosk's technical limitations.
 
 >[!NOTE]
-> When exposing the instance, it is recommended to consider to set a password (see [this section](https://docs.immichkiosk.app/configuration/additional-options/#password) for the necessary configuration) as well as enable a service for authentication such as [authentik](https://goauthentik.io/) and [Tinyauth](https://tinyauth.app) based on your use-case.
+> When exposing the instance, it is recommended to consider to set a password (refer to [this section](https://docs.immichkiosk.app/configuration/additional-options/#password) for the necessary configuration) as well as enable a service for authentication such as [authentik](https://goauthentik.io/) and [Tinyauth](https://tinyauth.app) based on your use-case.
 
 ### Extending the configuration
 
@@ -124,7 +124,7 @@ Take a look at:
 
 - [`defaults/main.yml`](../defaults/main.yml) for some variables that you can customize via your `vars.yml` file. You can override settings (even those that don't have dedicated playbook variables) using the `immich_kiosk_environment_variables_additional_variables` variable
 
-See [the official documentation](https://docs.immichkiosk.app/configuration/) for a complete list of Immich Kiosk's config options that you can put in `immich_kiosk_environment_variables_additional_variables`.
+Refer to [the official documentation](https://docs.immichkiosk.app/configuration/) for a complete list of Immich Kiosk's config options that you can put in `immich_kiosk_environment_variables_additional_variables`.
 
 #### Configuration example (demo style UI)
 
@@ -152,7 +152,7 @@ immich_kiosk_environment_variables_additional_variables: |
 ```
 
 >[!NOTE]
-> The weather location overlay can only be configured using a `config.yaml` file with an API key from [OpenWeatherMap](https://openweathermap.org/). See [this page](https://docs.immichkiosk.app/configuration/weather/) for details. To use the file, you manually need to mount it to the container with `immich_kiosk_container_additional_volumes_custom` avoiding the configuration with environment variables altogether.
+> The weather location overlay can only be configured using a `config.yaml` file with an API key from [OpenWeatherMap](https://openweathermap.org/). Refer to [this page](https://docs.immichkiosk.app/configuration/weather/) for details. To use the file, you manually need to mount it to the container with `immich_kiosk_container_additional_volumes_custom` avoiding the configuration with environment variables altogether.
 
 ## Installing
 
