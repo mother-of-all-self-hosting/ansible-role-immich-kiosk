@@ -55,6 +55,12 @@ Tests a standard Immich Kiosk installation with self-building the container imag
 
 ## Running
 
+Configuration validation can be tested locally without Docker or an Immich server:
+
+```bash
+ansible-playbook -i localhost, molecule/validate_config.yml
+```
+
 By default it is configured to run the scenarios on Ubuntu 26.04.
 
 ```bash

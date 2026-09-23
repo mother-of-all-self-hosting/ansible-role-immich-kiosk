@@ -1,0 +1,90 @@
+# SPDX-FileCopyrightText: 2026 MASH project contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+---
+- name: Verify Immich Kiosk configuration validation
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars_files:
+    - ../defaults/main.yml
+  vars:
+    immich_kiosk_validation_crlf: "\r\n"
+    immich_kiosk_validation_forms:
+      - { prefix: "", suffix: "=false" }
+      - { prefix: "  ", suffix: "=" }
+      - { prefix: "\t", suffix: " =album,favorite\r\n" }
+    immich_kiosk_validation_mappings:
+      - { old: KIOSK_SHOW_MORE_INFO, new: KIOSK_MORE_INFO_DISPLAY }
+      - { old: KIOSK_SHOW_MORE_INFO_IMAGE_LINK, new: KIOSK_MORE_INFO_SHOW_ASSET_LINK }
+      - { old: KIOSK_SHOW_MORE_INFO_QR_CODE, new: KIOSK_MORE_INFO_SHOW_QR_CODE }
+      - { old: KIOSK_LIKE_BUTTON_ACTION, new: KIOSK_MORE_INFO_LIKE_BUTTON_ACTION }
+      - { old: KIOSK_HIDE_BUTTON_ACTION, new: KIOSK_MORE_INFO_HIDE_BUTTON_ACTION }
+    immich_kiosk_validation_current: |
+      KIOSK_MORE_INFO_DISPLAY=false
+      KIOSK_MORE_INFO_SHOW_ASSET_LINK=false
+      KIOSK_MORE_INFO_SHOW_QR_CODE=false
+      KIOSK_MORE_INFO_LIKE_BUTTON_ACTION=album,favorite
+      KIOSK_MORE_INFO_HIDE_BUTTON_ACTION=tag,archive
+      KIOSK_MORE_INFO_SHOW_RATING=false
+      KIOSK_MORE_INFO_SHOW_LIKE_BUTTON=false
+      KIOSK_MORE_INFO_SHOW_HIDE_BUTTON=false
+  tasks:
+    - name: Run configuration validation cases
+      vars:
+        immich_kiosk_uid: 1000
+        immich_kiosk_gid: 1000
+        immich_kiosk_container_network: immich-kiosk
+        immich_kiosk_container_labels_traefik_enabled: false
+        immich_kiosk_environment_variables_kiosk_immich_api_key: test-key
+        immich_kiosk_environment_variables_kiosk_immich_url: https://example.com
+      block:
+        - name: Verify empty and current environment settings
+          ansible.builtin.include_tasks: validate_config_case.yml
+          vars:
+            immich_kiosk_environment_variables_additional_variables: "{{ immich_kiosk_validation_input }}"
+            immich_kiosk_validation_expected: []
+          loop:
+            - ""
+            - "{{ immich_kiosk_validation_current }}"
+          loop_control:
+            loop_var: immich_kiosk_validation_input
+
+        - name: Verify comments and unrelated text for every legacy key
+          ansible.builtin.include_tasks: validate_config_case.yml
+          vars:
+            immich_kiosk_environment_variables_additional_variables: |
+              # {{ immich_kiosk_validation_mapping.old }}=false
+                # {{ immich_kiosk_validation_mapping.old }}=true
+              UNRELATED={{ immich_kiosk_validation_mapping.old }}=false
+              PREFIX_{{ immich_kiosk_validation_mapping.old }}=false
+              {{ immich_kiosk_validation_mapping.old }}_SUFFIX=false
+              # Mention {{ immich_kiosk_validation_mapping.old }} without assigning it
+            immich_kiosk_validation_expected: []
+          loop: "{{ immich_kiosk_validation_mappings }}"
+          loop_control:
+            loop_var: immich_kiosk_validation_mapping
+
+        - name: Verify legacy assignments including empty values and mixed current settings
+          ansible.builtin.include_tasks: validate_config_case.yml
+          vars:
+            immich_kiosk_environment_variables_additional_variables: >-
+              {{ immich_kiosk_validation_current ~ immich_kiosk_validation_crlf ~ immich_kiosk_validation_case.1.prefix
+                 ~ immich_kiosk_validation_case.0.old ~ immich_kiosk_validation_case.1.suffix }}
+            immich_kiosk_validation_expected: "{{ [immich_kiosk_validation_case.0] }}"
+          loop: >-
+            {{ immich_kiosk_validation_mappings | product(immich_kiosk_validation_forms) | list }}
+          loop_control:
+            loop_var: immich_kiosk_validation_case
+
+        - name: Verify all legacy assignments report their replacements together
+          ansible.builtin.include_tasks: validate_config_case.yml
+          vars:
+            immich_kiosk_environment_variables_additional_variables: |
+              KIOSK_SHOW_MORE_INFO=false
+              KIOSK_SHOW_MORE_INFO_IMAGE_LINK=false
+              KIOSK_SHOW_MORE_INFO_QR_CODE=false
+              KIOSK_LIKE_BUTTON_ACTION=album
+              KIOSK_HIDE_BUTTON_ACTION=archive
+            immich_kiosk_validation_expected: "{{ immich_kiosk_validation_mappings }}"

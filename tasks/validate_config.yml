@@ -15,6 +15,22 @@
   with_items:
     - { "old": "immich_kiosk_container_image_force_pull", "new": "<removed> (the new community.docker.docker_image_pull module handles this natively)" }
 
+- name: Fail if removed Immich Kiosk environment settings are assigned
+  ansible.builtin.fail:
+    msg: >-
+      Immich Kiosk 0.44.0 removed `{{ item.old }}`.
+      Replace it with `{{ item.new }}` in `immich_kiosk_environment_variables_additional_variables`.
+      The additional environment variables are passed through unchanged; legacy settings are not translated.
+  when: >-
+    immich_kiosk_environment_variables_additional_variables
+    is regex('(?m)^[ \t]*' ~ item.old ~ '[ \t]*=')
+  with_items:
+    - { "old": "KIOSK_SHOW_MORE_INFO", "new": "KIOSK_MORE_INFO_DISPLAY" }
+    - { "old": "KIOSK_SHOW_MORE_INFO_IMAGE_LINK", "new": "KIOSK_MORE_INFO_SHOW_ASSET_LINK" }
+    - { "old": "KIOSK_SHOW_MORE_INFO_QR_CODE", "new": "KIOSK_MORE_INFO_SHOW_QR_CODE" }
+    - { "old": "KIOSK_LIKE_BUTTON_ACTION", "new": "KIOSK_MORE_INFO_LIKE_BUTTON_ACTION" }
+    - { "old": "KIOSK_HIDE_BUTTON_ACTION", "new": "KIOSK_MORE_INFO_HIDE_BUTTON_ACTION" }
+
 - name: Fail if required Immich Kiosk settings not defined
   ansible.builtin.fail:
     msg: >-

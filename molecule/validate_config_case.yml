@@ -1,0 +1,44 @@
+# SPDX-FileCopyrightText: 2026 MASH project contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+---
+- name: Reset the captured validation failure
+  ansible.builtin.set_fact:
+    immich_kiosk_validation_failure: {}
+
+- name: Exercise the role validation tasks
+  block:
+    - name: Run configuration validation
+      ansible.builtin.include_tasks: ../tasks/validate_config.yml
+  rescue:
+    - name: Capture the validation failure for assertions
+      ansible.builtin.set_fact:
+        immich_kiosk_validation_failure: "{{ ansible_failed_result }}"
+
+- name: Assert that only the expected environment settings failed
+  ansible.builtin.assert:
+    that:
+      - (immich_kiosk_validation_failure.failed | default(false)) == (immich_kiosk_validation_expected | length > 0)
+      - >-
+        immich_kiosk_validation_failure.get('results', []) | selectattr('failed', 'defined')
+        | selectattr('failed') | map(attribute='item') | list == immich_kiosk_validation_expected
+
+- name: Assert that each diagnostic names the setting and its replacement
+  ansible.builtin.assert:
+    that:
+      - item.item.old in item.msg
+      - item.item.new in item.msg
+      - "'immich_kiosk_environment_variables_additional_variables' in item.msg"
+  loop: >-
+    {{ immich_kiosk_validation_failure.get('results', []) | selectattr('failed', 'defined')
+       | selectattr('failed') | list }}
+
+- name: Assert that the environment template preserves the raw additional variables
+  ansible.builtin.assert:
+    that:
+      - >-
+        lookup('ansible.builtin.template', '../templates/env.j2').endswith(
+          immich_kiosk_environment_variables_additional_variables)
+        or lookup('ansible.builtin.template', '../templates/env.j2').endswith(
+          immich_kiosk_environment_variables_additional_variables ~ '\n')
