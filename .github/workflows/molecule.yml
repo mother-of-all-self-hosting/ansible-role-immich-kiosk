@@ -72,6 +72,10 @@ jobs:
         working-directory: immich-kiosk
         run: pip install -r molecule/requirements.txt
 
+      - name: Verify configuration validation
+        working-directory: immich-kiosk
+        run: ansible-playbook -i localhost, molecule/validate_config.yml
+
       - name: Run Molecule
         working-directory: immich-kiosk
         run: molecule test --scenario-name ${{ matrix.scenario }}
