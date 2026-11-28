@@ -25,7 +25,7 @@
         state: absent
 
     - name: Ensure Immich Kiosk container network does not exist
-      when: immich_kiosk_container_network_deletion_enabled
+      when: immich_kiosk_container_network_deletion_enabled and immich_kiosk_container_network != 'host'
       block:
         - name: Ensure Immich Kiosk container network does not exist via community.docker.docker_network
           when: devture_systemd_docker_base_container_network_creation_method == 'ansible-module'
